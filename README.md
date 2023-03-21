@@ -35,7 +35,10 @@ Optional `hyperparameters`:
 - `population_size`: Total number of individuals to run the algorithm. By default `100`.
 
 To learn more and get started, check out [our guides and docs](https://hexdocs.pm/genetix).
-![Genetix Logo](guides/logo.png)
+
+<div align="center">
+  <img width="400" height="250" src="guides/logo.png">
+</div>
 
 **NOTE**: This framework is based on the `Genetic algorithms in Elixir: Solve Problems Using Evolution` The Pragmatic Programmers, by Sean Moriarity.
 
