@@ -8,7 +8,7 @@ The process of creating an algorithm can be thought of in three phases:
 2. Evolution Definition
 3. Algorithm Execution
 
-You only need to define the `Genetix.Problem`!
+You only need to define the `Genetix.Problem` and run it using `Genetix.run/2` function!
 
 To define a new `Genetix.Problem`  you need to define the specific-problems funtions:
 
@@ -84,7 +84,9 @@ Remember, a basic genetic  problem consists of: `genotype/0`, `fitness_function/
   end
   ```
 
-You can take a look to `genetix/problems` for other problems implemented as example.
+You can run `Genetix.run(Genetix.Problems.OneMax, size: 100)` to solve the problem.
+
+If you want, you can take a look to `genetix/problems` for other problems implemented as example.
 
 ## License
 
