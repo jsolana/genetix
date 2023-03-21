@@ -37,7 +37,7 @@ Optional `hyperparameters`:
 To learn more and get started, check out [our guides and docs](https://hexdocs.pm/genetix).
 
 <div align="center">
-  <img width="400" height="250" src="guides/logo.png">
+  <img width="400" height="250" src="guides/logo.png" onerror="this.onerror=null; this.src='assets/logo.png'">
 </div>
 
 **NOTE**: This framework is based on the `Genetic algorithms in Elixir: Solve Problems Using Evolution` The Pragmatic Programmers, by Sean Moriarity.
