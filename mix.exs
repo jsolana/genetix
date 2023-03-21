@@ -32,7 +32,7 @@ defmodule Genetix.MixProject do
   defp docs() do
     [
       # The main page in the docs
-      main: "README",
+      main: "readme",
       logo: "guides/logo.png",
       extras: ["README.md"]
     ]
