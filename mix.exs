@@ -23,6 +23,7 @@ defmodule Genetix.MixProject do
 
   defp package() do
     %{
+      licenses: ["Apache-2.0"],
       maintainers: ["Javier Solana"],
       links: %{"GitHub" => "https://github.com/jsolana/genetix"}
     }
