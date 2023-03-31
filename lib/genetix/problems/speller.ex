@@ -45,10 +45,10 @@ defmodule Genetix.Problems.Speller do
   @doc """
   Terminate implementation for Speller problem.
   """
-  def terminate?([best | _], opts \\ []) do
+  def terminate?([best | _], generation, opts \\ []) do
     max_generation = Keyword.get(opts, :max_generation, 10_000)
     fit_str = best.fitness |> :erlang.float_to_binary(decimals: 4)
     IO.write("\r#{fit_str}")
-    best.fitness == 1 || best.age == max_generation
+    best.fitness == 1 || generation == max_generation
   end
 end

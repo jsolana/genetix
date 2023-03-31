@@ -65,9 +65,10 @@ defmodule Genetix do
     Logger.info("Running #{inspect(problem)}")
     # Logger.info("opts: #{inspect(opts)}")
     population = initialize(&problem.genotype/1, opts)
+    first_generation = 0
 
     population
-    |> evolve(problem, opts)
+    |> evolve(problem, first_generation, opts)
   end
 
   defp initialize(genotype, opts) do
@@ -77,13 +78,14 @@ defmodule Genetix do
     population
   end
 
-  defp evolve(population, problem, opts) do
+  defp evolve(population, problem, generation, opts) do
     population = evaluate(population, &problem.fitness_function/2, opts)
+    statistics(population, generation, opts)
     best = hd(population)
     # IO.write("\rCurrent Best: #{fitness_function.(best)}")
     # IO.gets("Population evolved: #{inspect(population)}\nCurrent Best: #{inspect(best)}\nPress Enter to continue...")
 
-    if problem.terminate?(population, opts) do
+    if problem.terminate?(population, generation, opts) do
       IO.write("\r")
       best
     else
@@ -92,7 +94,7 @@ defmodule Genetix do
       mutants = mutation(children, opts)
       offspring = children ++ mutants
       new_population = reinsertion(parents, offspring, leftover, opts)
-      evolve(new_population, problem, opts)
+      evolve(new_population, problem, generation + 1, opts)
     end
   end
 
@@ -152,8 +154,23 @@ defmodule Genetix do
     result
   end
 
-  def reinsertion(parents, offspring, leftover, opts \\ []) do
+  defp reinsertion(parents, offspring, leftover, opts) do
     reinsert_operator = Keyword.get(opts, :reinsert_type, &Reinsertion.pure/4)
     reinsert_operator.(parents, offspring, leftover, opts)
+  end
+
+  defp statistics(population, generation, opts) do
+    default_stats = [
+      min_fitness: &Enum.min_by(&1, fn c -> c.fitness end).fitness,
+      max_fitness: &Enum.max_by(&1, fn c -> c.fitness end).fitness,
+      mean_fitness: &Enum.sum(Enum.map(&1, fn c -> c.fitness end))
+    ]
+
+    stats = Keyword.get(opts, :statistics, default_stats)
+
+    stats_map =
+      stats |> Enum.reduce(%{}, fn {key, func}, acc -> Map.put(acc, key, func.(population)) end)
+
+    Utilities.Statistics.insert(generation, stats_map)
   end
 end

@@ -35,7 +35,7 @@ defmodule Genetix.Problems.OneMax do
   @doc """
   Terminate implementation for OneMax problem.
   """
-  def terminate?([best | _], _opts \\ []) do
+  def terminate?([best | _], _generation, _opts \\ []) do
     IO.write("\r#{inspect(best.fitness)}")
     best.fitness == best.size
   end

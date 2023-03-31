@@ -20,6 +20,7 @@ defmodule Genetix.Problem do
     - `sort_criteria`:        How to sort the population by its fitness score (max or min). By default max first.
     - `reinsertion_type`:     Reinsertion strategy. By defaul `pure/4`.
     - `reinsertion_rate`:     Portion of old chromosomes to survive the next generation. By defaul `0.2`. Take care of growing and shrinking population in combination with `select_rate`.
+    - `statistics`:           Map with statistic functions to apply.
 
     Optional `hyperparameters`:
 
@@ -49,5 +50,5 @@ defmodule Genetix.Problem do
   @doc """
   Its defines when the algorithm must to stop returning true or continue in other case.
   """
-  @callback terminate?(Enum.t(), hyperparameters) :: boolean()
+  @callback terminate?(Enum.t(), integer(), hyperparameters) :: boolean()
 end

@@ -36,7 +36,7 @@ defmodule Genetix.Problems.ZeroMax do
   @doc """
   Terminate function implementation for ZeroMax problem.
   """
-  def terminate?([best | _], _opts \\ []) do
+  def terminate?([best | _], _generation, _opts \\ []) do
     IO.write("\r#{inspect(best.fitness)}")
     best.fitness < 1
   end
