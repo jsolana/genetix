@@ -12,12 +12,14 @@ defmodule Genetix.Problem do
 
     - `evaluation_type`:      Evaluation operator. By default `heuristic_evaluation/3`.
     - `select_type`:          Selection operator. By default `select_elite/3`.
-    - `select_rate`:          Selection rate. By default `0.8`.
+    - `select_rate`:          Selection rate. By default `0.8`. Take care of growing and shrinking population in combination with `survive_rate`.
     - `crossover_type`:       Crossover operator. By defaul `crossover_cx_one_point/3`. To run successfully this problem, you need to override this property using `custom_crossover` function.
     - `crossover_rate`:       Crossover rate, apply in some strategies as `uniform` to determine the probability to swap both genes. By default `0.5` (50% of probability).
     - `mutation_type`:        Mutation operator. By default `mutation_shuffle/2`. To run successfully this problem, you need to override this property using `custom_mutation` function.
     - `mutation_probability`: Mutation probability. By defaul `0.05`.
     - `sort_criteria`:        How to sort the population by its fitness score (max or min). By default max first.
+    - `reinsertion_type`:     Reinsertion strategy. By defaul `pure/4`.
+    - `reinsertion_rate`:     Portion of old chromosomes to survive the next generation. By defaul `0.2`. Take care of growing and shrinking population in combination with `select_rate`.
 
     Optional `hyperparameters`:
 

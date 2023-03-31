@@ -52,7 +52,7 @@ defmodule Genetix do
 
 
   """
-  alias Genetix.Evolution.{CrossOver, Mutation, Select, Evaluate}
+  alias Genetix.Evolution.{CrossOver, Mutation, Select, Evaluate, Reinsertion}
 
   require Logger
 
@@ -89,10 +89,10 @@ defmodule Genetix do
     else
       {parents, leftover} = select(population, opts)
       children = crossover(parents, opts)
-
-      (children ++ leftover)
-      |> mutation(opts)
-      |> evolve(problem, opts)
+      mutants = mutation(children, opts)
+      offspring = children ++ mutants
+      new_population = reinsertion(parents, offspring, leftover, opts)
+      evolve(new_population, problem, opts)
     end
   end
 
@@ -139,18 +139,21 @@ defmodule Genetix do
   defp mutation(population, opts) do
     mutation_operator = Keyword.get(opts, :mutation_type, &Mutation.mutation_shuffle/2)
     mutation_probability = Keyword.get(opts, :mutation_probability, 0.05)
+    n = floor(length(population) * mutation_probability)
 
     result =
       population
+      |> Enum.take_random(n)
       |> Enum.map(fn chromosome ->
-        if :rand.uniform() < mutation_probability do
-          mutation_operator.(chromosome, opts)
-        else
-          chromosome
-        end
+        mutation_operator.(chromosome, opts)
       end)
 
     # IO.gets("Mutation result: #{inspect(result)}\nPress Enter to continue...")
     result
+  end
+
+  def reinsertion(parents, offspring, leftover, opts \\ []) do
+    reinsert_operator = Keyword.get(opts, :reinsert_type, &Reinsertion.pure/4)
+    reinsert_operator.(parents, offspring, leftover, opts)
   end
 end

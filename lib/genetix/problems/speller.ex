@@ -47,7 +47,8 @@ defmodule Genetix.Problems.Speller do
   """
   def terminate?([best | _], opts \\ []) do
     max_generation = Keyword.get(opts, :max_generation, 10_000)
-    IO.write("\r#{inspect(best.fitness)}")
+    fit_str = best.fitness |> :erlang.float_to_binary(decimals: 4)
+    IO.write("\r#{fit_str}")
     best.fitness == 1 || best.age == max_generation
   end
 end
