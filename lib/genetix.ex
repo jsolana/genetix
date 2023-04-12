@@ -63,6 +63,7 @@ defmodule Genetix do
   """
   def run(problem, opts \\ []) do
     Logger.info("Running #{inspect(problem)}")
+    init_statistics()
     # Logger.info("opts: #{inspect(opts)}")
     population = initialize(&problem.genotype/1, opts)
     first_generation = 0
@@ -159,11 +160,13 @@ defmodule Genetix do
     reinsert_operator.(parents, offspring, leftover, opts)
   end
 
+  defp init_statistics(), do: Utilities.Statistics.clean()
+
   defp statistics(population, generation, opts) do
     default_stats = [
       min_fitness: &Enum.min_by(&1, fn c -> c.fitness end).fitness,
       max_fitness: &Enum.max_by(&1, fn c -> c.fitness end).fitness,
-      mean_fitness: &Enum.sum(Enum.map(&1, fn c -> c.fitness end))
+      mean_fitness: &(Enum.sum(Enum.map(&1, fn c -> c.fitness end)) / length(&1))
     ]
 
     stats = Keyword.get(opts, :statistics, default_stats)

@@ -6,7 +6,7 @@ defmodule Genetix.Evolution.Reinsertion do
 
   """
 
-  require Logger
+  # require Logger
 
   @doc """
   Every chromosome in the old population is replaced with an offspring of the new population
@@ -22,14 +22,14 @@ defmodule Genetix.Evolution.Reinsertion do
 
   @doc """
   You keep a top-portion of your old population to survive the next generation.
-  You need to define a `survival_rate`to dictates the percentage of parent chromosomes
-  that survives to the next generation, eg: with a population of 100 and a `survival_rate`
+  You need to define a `reinsertion_rate`to dictates the percentage of parent chromosomes
+  that survives to the next generation, eg: with a population of 100 and a `reinsertion_rate`
   of 0.2 (20%), you'd keep 20 of your parents.
   """
   def elitist(parents, offspring, leftover, opts \\ []) do
     old = parents ++ leftover
-    survival_rate = Keyword.get(opts, :survival_rate, 0.2)
-    n = floor(length(old) * survival_rate)
+    reinsertion_rate = Keyword.get(opts, :reinsertion_rate, 0.2)
+    n = floor(length(old) * reinsertion_rate)
     survivors = old |> Enum.sort_by(& &1.fitness, &>=/2) |> Enum.take(n)
     offspring ++ survivors
   end
@@ -38,14 +38,14 @@ defmodule Genetix.Evolution.Reinsertion do
   Also called random replacement is a reinsertion strategy that select random chromosomes
   from the old population to survive to the next generation. The purpose is to keep as much as
   genetic diversity as possible (is not too common).
-  You need to define a `survival_rate`to dictates the percentage of parent chromosomes
-  that survives to the next generation, eg: with a population of 100 and a `survival_rate`
+  You need to define a `reinsertion_rate`to dictates the percentage of parent chromosomes
+  that survives to the next generation, eg: with a population of 100 and a `reinsertion_rate`
   of 0.2 (20%), you'd keep 20 of your parents.
   """
   def uniform(parents, offspring, leftover, opts \\ []) do
     old = parents ++ leftover
-    survival_rate = Keyword.get(opts, :survival_rate, 0.2)
-    n = floor(length(old) * survival_rate)
+    reinsertion_rate = Keyword.get(opts, :reinsertion_rate, 0.2)
+    n = floor(length(old) * reinsertion_rate)
     survivors = old |> Enum.take_random(n)
     offspring ++ survivors
   end

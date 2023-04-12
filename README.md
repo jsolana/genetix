@@ -22,12 +22,15 @@ Common `hyperparameters`:
 
 - `evaluation_type`: Evaluation operator. By default `heuristic_evaluation/3`.
 - `select_type`: Selection operator. By default `select_elite/3`.
-- `select_rate`: Selection rate. By default `0.8`.
+- `select_rate`: Selection rate. By default `0.8`. Take care of growing and shrinking population in combination with `reinsertion_rate`.
 - `crossover_type`: Crossover operator. By defaul `crossover_cx_one_point/3`. To run successfully this problem, you need to override this property using `custom_crossover` function.
 - `crossover_rate`: Crossover rate, apply in some strategies as `uniform` to determine the probability to swap both genes. By default `0.5` (50% of probability).
 - `mutation_type`: Mutation operator. By default `mutation_shuffle/2`. To run successfully this problem, you need to override this property using `custom_mutation` function.
 - `mutation_probability`: Mutation probability. By defaul `0.05`.
 - `sort_criteria`: How to sort the population by its fitness score (max or min). By default max first.
+- `reinsertion_type`: Reinsertion strategy. By defaul `pure/4`.
+- `reinsertion_rate`: Portion of old chromosomes to survive the next generation. By defaul `0.2`. Take care of growing and shrinking population in combination with `select_rate`.
+- `statistics`: Map name-function with statistic functions to apply. By default, it calculates the minimum, maximum an the mean of the population (based on the fitness score).
 
 Optional `hyperparameters`:
 
@@ -87,6 +90,49 @@ Remember, a basic genetic  problem consists of: `genotype/0`, `fitness_function/
 You can run `Genetix.run(Genetix.Problems.OneMax, size: 100)` to solve the problem.
 
 If you want, you can take a look to `genetix/problems` for other problems implemented as example.
+
+## Tracking Genetic Algorithms
+
+The goal of all the problems you are going to solve are related with optimize and objetive. In all the algorithms, you must to define the problem, configure the algorithm and run it until you obtain a solution. Sometimes you need a way to track the progress of an evolution over the time:
+
+- Analyze how your population's fitness grew over time
+- How the distribution of fitness changed between generations
+- ...
+
+Those insight can help you make decisions about how to reconfigure or adjust your algorithms.
+
+For this purpose, `Genetix` provides `Statistics` that uses ETS to store the evolution of the population over time. You can override the default statistics with the `statistics` hyperparameter.
+
+Once the algorithm ends you can access your statistics running `Utilities.Statistics.lookup/1` function.
+An example of use:
+
+```elixir
+  iex> Genetix.run(Genetix.Problems.OneMax, size: 100)
+
+  # once the algorithm ends
+  iex>  {_, zero_gen_stats} = Utilities.Statistics.lookup(0)
+  iex>  {_, fivethousand_gen_stats} = Utilities.Statistics.lookup(5000)
+```
+
+An example defining custom statistics:
+
+```elixir
+  
+  def get_percentile_90(population) do
+    sorted_population = Enum.map(population, fn c -> c.fitness end) |> Enum.sort()
+    n = length(sorted_population)
+    k = round(0.9 * n)
+    
+    if k == 0 do
+      Enum.at(sorted_population, 0)
+    else
+      Enum.at(sorted_population, k - 1)
+    end
+  end 
+
+  Genetix.run(Genetix.Problems.OneMax, size: 10, statistics: %{percentile_90: &get_percentile_90/1})
+
+```
 
 ## License
 

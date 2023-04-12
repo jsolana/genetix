@@ -20,4 +20,8 @@ defmodule Utilities.Statistics do
   def lookup(generation) do
     hd(:ets.lookup(:statistics, generation))
   end
+
+  def clean() do
+    :ets.delete_all_objects(:statistics)
+  end
 end
