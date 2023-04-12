@@ -24,7 +24,7 @@ defmodule Genetix.Problem do
 
     Optional `hyperparameters`:
 
-    - `size`:                 Total number of locations. By default `10`.
+    - `size`:                 Size of the genotype. By default `10`.
     - `population_size`:      Total number of individuals to run the algorithm. By default `100`.
 
   """

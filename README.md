@@ -34,7 +34,7 @@ Common `hyperparameters`:
 
 Optional `hyperparameters`:
 
-- `size`: Total number of locations. By default `10`.
+- `size`: Size of the genotype. By default `10`.
 - `population_size`: Total number of individuals to run the algorithm. By default `100`.
 
 To learn more and get started, check out [our guides and docs](https://hexdocs.pm/genetix).
