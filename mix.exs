@@ -50,7 +50,8 @@ defmodule Genetix.MixProject do
   defp deps do
     [
       {:libgraph, "~> 0.16.0"},
-      {:ex_doc, "~> 0.29", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.29", only: :dev, runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 end

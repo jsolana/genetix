@@ -102,18 +102,21 @@ defmodule Genetix.Evolution.Select do
     0..(number_of_candidates - 1)
     |> Enum.map(fn _ ->
       u = :rand.uniform() * sum_fitness
-
-      population
-      |> Enum.reduce_while(
-        0,
-        fn chromosome, acc ->
-          if chromosome.fitness + acc > u do
-            {:halt, chromosome}
-          else
-            {:cont, chromosome.fitness + acc}
-          end
-        end
-      )
+      spin(population, u)
     end)
+  end
+
+  defp spin(chromosomes, u) do
+    chromosomes
+    |> Enum.reduce_while(
+      0,
+      fn chromosome, acc ->
+        if chromosome.fitness + acc > u do
+          {:halt, chromosome}
+        else
+          {:cont, chromosome.fitness + acc}
+        end
+      end
+    )
   end
 end
