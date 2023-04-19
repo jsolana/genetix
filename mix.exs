@@ -51,7 +51,8 @@ defmodule Genetix.MixProject do
     [
       {:libgraph, "~> 0.16.0"},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev], runtime: false}
     ]
   end
 end

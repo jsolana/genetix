@@ -17,6 +17,8 @@ defmodule Genetix.Evolution.CrossOver do
 
   require Logger
 
+  @spec crossover_cx_one_point(Chromosome.t(), Chromosome.t(), keyword()) ::
+          {Chromosome.t(), Chromosome.t()}
   @doc """
   Single-point crossover is the most basic crossover strategy. It works like this:
 
@@ -34,6 +36,8 @@ defmodule Genetix.Evolution.CrossOver do
     {%Chromosome{parent_1 | genes: h1 ++ t2}, %Chromosome{parent_2 | genes: h2 ++ t1}}
   end
 
+  @spec order_one_crossover(Chromosome.t(), Chromosome.t(), keyword()) ::
+          {Chromosome.t(), Chromosome.t()}
   @doc """
   Order-one crossover, sometimes called "Davis order" crossover, is a crossover strategy on ordered list or permutations.
   Order-one is  part of a unique set of crossover strategies that will preserve the integrity of a permutation without
@@ -78,6 +82,8 @@ defmodule Genetix.Evolution.CrossOver do
      }}
   end
 
+  @spec uniform(Chromosome.t(), Chromosome.t(), keyword()) ::
+          {Chromosome.t(), Chromosome.t()}
   @doc """
   Genes in the parent chromosome are treated separately (individually).
   Uniform crossover works by paaring corresponding genes in a chromosome an swapping them according to a rate
