@@ -27,7 +27,16 @@ defmodule Genetix.Evolution.CrossOver do
     3) Swap the tails of each parent at k produce two new children.
 
   """
-  def crossover_cx_one_point(parent_1, parent_2, _opts \\ []) do
+  def crossover_cx_one_point(parent_1, parent_2, opts \\ [])
+
+  def crossover_cx_one_point(
+        parent_1 = %Chromosome{genes: []},
+        parent_2 = %Chromosome{genes: []},
+        _opts
+      ),
+      do: {parent_1, parent_2}
+
+  def crossover_cx_one_point(parent_1, parent_2, _opts) do
     cx_point = :rand.uniform(length(parent_1.genes))
 
     {{h1, t1}, {h2, t2}} =

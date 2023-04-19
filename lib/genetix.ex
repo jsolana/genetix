@@ -48,7 +48,7 @@ defmodule Genetix do
   ## Examples
 
       iex> alias Genetix.Problems.OneMax
-      iex> Genetix.run(OneMax, size: 100)
+      iex> Genetix.run(OneMax, size: 50)
 
 
   """
