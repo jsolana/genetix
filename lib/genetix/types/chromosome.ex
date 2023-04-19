@@ -13,17 +13,25 @@ defmodule Genetix.Types.Chromosome do
 
   # Fields
     - `:genes`: `Enum` containing genotype representation.
+    - `:id`: `string` unique id of chromosome.
     - `:size`: `non_neg_integer` representing size of chromosome.
     - `:age`: `non_neg_integer` representing age of chromosome.
     - `:fitness`: `number` representing fitness(es) of chromosome.
   """
   @type t :: %__MODULE__{
           genes: Enum.t(),
+          id: String.t(),
           size: non_neg_integer(),
           age: non_neg_integer(),
           fitness: number()
         }
 
   @enforce_keys :genes
-  defstruct [:genes, size: 0, fitness: 0, age: 0]
+  defstruct [
+    :genes,
+    id: Base.encode16(:crypto.strong_rand_bytes(64)),
+    size: 0,
+    fitness: 0,
+    age: 0
+  ]
 end

@@ -134,6 +134,20 @@ An example defining custom statistics:
 
 ```
 
+## Tracking Genealogy
+
+`Genetix` provides a way to track the evolution of each chromosome using `libgraph`. A genealogy tree is a directed grapgh that points from parent chromosome to child chromosome and shows the transitions of the evolution from first population to last population.
+
+You can explore the genealogy tree generated after running your algorithm:
+
+```elixir
+  Genetix.run(Genetix.Problems.OneMax, size: 50)
+  genealogy = Utilities.Genealogy.get_tree()
+  IO.inspect(Graph.vertices(genealogy))
+```
+
+If you run this, you'll see a very long list of chromosomes. Take a look to the [libgraph doc](https://hexdocs.pm/libgraph/api-reference.html) for more information.
+
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License");

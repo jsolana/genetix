@@ -76,6 +76,7 @@ defmodule Genetix do
     population_size = Keyword.get(opts, :population_size, 100)
     population = for _ <- 1..population_size, do: genotype.(opts)
     # IO.gets("Population: #{inspect(population)}\nPress Enter to continue...")
+    Utilities.Genealogy.add_chromosomes(population)
     population
   end
 
@@ -131,6 +132,8 @@ defmodule Genetix do
         [],
         fn {p1, p2}, acc ->
           {c1, c2} = crossover_operator.(p1, p2, opts)
+          Utilities.Genealogy.add_chromosome(p1, p2, c1)
+          Utilities.Genealogy.add_chromosome(p1, p2, c2)
           [c1, c2 | acc]
         end
       )
@@ -148,10 +151,13 @@ defmodule Genetix do
       population
       |> Enum.take_random(n)
       |> Enum.map(fn chromosome ->
-        mutation_operator.(chromosome, opts)
+        mutant = mutation_operator.(chromosome, opts)
+        Utilities.Genealogy.add_chromosome(chromosome, mutant)
+        mutant
       end)
 
     # IO.gets("Mutation result: #{inspect(result)}\nPress Enter to continue...")
+
     result
   end
 

@@ -49,6 +49,7 @@ defmodule Genetix.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:libgraph, "~> 0.16.0"},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false}
     ]
   end
