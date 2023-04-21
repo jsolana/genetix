@@ -53,7 +53,9 @@ defmodule Genetix.MixProject do
       {:stream_data, "~> 0.5.0", only: :test},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.3", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
+      {:benchee, "~> 1.1", only: :dev},
+      {:benchee_html, "~> 1.0", only: :dev}
     ]
   end
 end

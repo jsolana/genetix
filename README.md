@@ -148,6 +148,17 @@ You can explore the genealogy tree generated after running your algorithm:
 
 If you run this, you'll see a very long list of chromosomes. Take a look to the [libgraph doc](https://hexdocs.pm/libgraph/api-reference.html) for more information.
 
+## Benchmarking Genetic Algorithms
+
+Benchmarking your algorithm allows you to determine if the optimizations you are making are having impact on the overall performance of your algorithm.
+`Genetix` uses [benchee](https://hex.pm/packages/benchee) for benchmarking. `Benchee` provides a lot of information out of the box.
+
+You can check example(s) of benchmarking using `benchee` under `bench` folder and run `mix run bench/benchmark.exs` to see the results of the benchmarks.
+
+Check the [benchee documentation](https://hexdocs.pm/benchee/readme.html) for more information.
+
+`Genetix` also uses [benchee_html](https://github.com/bencheeorg/benchee_html) to generate a nice looking HTML report where individual graphs can also be exported as PNG images under `benchmarks` folder.
+
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License");

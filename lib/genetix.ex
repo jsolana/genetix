@@ -72,7 +72,7 @@ defmodule Genetix do
     |> evolve(problem, first_generation, opts)
   end
 
-  defp initialize(genotype, opts) do
+  def initialize(genotype, opts \\ []) do
     population_size = Keyword.get(opts, :population_size, 100)
     population = for _ <- 1..population_size, do: genotype.(opts)
     # IO.gets("Population: #{inspect(population)}\nPress Enter to continue...")
@@ -80,7 +80,7 @@ defmodule Genetix do
     population
   end
 
-  defp evolve(population, problem, generation, opts) do
+  def evolve(population, problem, generation, opts \\ []) do
     population = evaluate(population, &problem.fitness_function/2, opts)
     statistics(population, generation, opts)
     best = hd(population)
@@ -100,14 +100,14 @@ defmodule Genetix do
     end
   end
 
-  defp evaluate(population, fitness_function, opts) do
+  def evaluate(population, fitness_function, opts \\ []) do
     evaluate_operator = Keyword.get(opts, :evaluate_type, &Evaluate.heuristic_evaluation/3)
     result = evaluate_operator.(population, fitness_function, opts)
     # IO.gets("Evaluate result: #{inspect(result)}\nPress Enter to continue...")
     result
   end
 
-  defp select(population, opts) do
+  def select(population, opts \\ []) do
     select_operator = Keyword.get(opts, :select_type, &Select.select_elite/3)
     select_rate = Keyword.get(opts, :select_rate, 0.8)
 
@@ -123,7 +123,7 @@ defmodule Genetix do
     result
   end
 
-  defp crossover(population, opts) do
+  def crossover(population, opts \\ []) do
     crossover_operator = Keyword.get(opts, :crossover_type, &CrossOver.crossover_cx_one_point/3)
 
     result =
@@ -142,7 +142,7 @@ defmodule Genetix do
     result
   end
 
-  defp mutation(population, opts) do
+  def mutation(population, opts \\ []) do
     mutation_operator = Keyword.get(opts, :mutation_type, &Mutation.mutation_shuffle/2)
     mutation_probability = Keyword.get(opts, :mutation_probability, 0.05)
     n = floor(length(population) * mutation_probability)
@@ -161,7 +161,7 @@ defmodule Genetix do
     result
   end
 
-  defp reinsertion(parents, offspring, leftover, opts) do
+  def reinsertion(parents, offspring, leftover, opts \\ []) do
     reinsert_operator = Keyword.get(opts, :reinsert_type, &Reinsertion.pure/4)
     reinsert_operator.(parents, offspring, leftover, opts)
   end
