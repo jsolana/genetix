@@ -148,7 +148,9 @@ You can explore the genealogy tree generated after running your algorithm:
 
 If you run this, you'll see a very long list of chromosomes. Take a look to the [libgraph doc](https://hexdocs.pm/libgraph/api-reference.html) for more information.
 
-## Benchmarking Genetic Algorithms
+## Benchmarking and Profiling Genetic Algorithms
+
+Elixir is a language that wasn't designed to be extremely efficient at computationally expensive tasks. `Genetix` allows benchmark and profile your genetic algorithms. Benchmarking is the process of evaluating your code from a performance point of view (establishing performance metrics for an entire operation to compare between other operations). Profiling is the process of evaluating specific aspects of a program in space or time to add in performance optimization (to understand the behavior of a program talling which operation spends most of its time or what function a program invokes the most offering detailed insights into where you should try to optimize the most).
 
 Benchmarking your algorithm allows you to determine if the optimizations you are making are having impact on the overall performance of your algorithm.
 `Genetix` uses [benchee](https://hex.pm/packages/benchee) for benchmarking. `Benchee` provides a lot of information out of the box.
@@ -158,6 +160,29 @@ You can check example(s) of benchmarking using `benchee` under `bench` folder an
 Check the [benchee documentation](https://hexdocs.pm/benchee/readme.html) for more information.
 
 `Genetix` also uses [benchee_html](https://github.com/bencheeorg/benchee_html) to generate a nice looking HTML report where individual graphs can also be exported as PNG images under `benchmarks` folder.
+
+`Genetix` also uses [exprof](https://hex.pm/packages/exprof) to profile your genetics algorithms with `Utilities.Profiler`.
+An example how to use `Utilities.Profiler`:
+
+```elixir
+  iex> Utilities.Profiler.run(Genetix.Problems.ZeroMax, sort_criteria: &<=/2)
+
+  HH:MM:SS.mm [info] Running Genetix.Problems.ZeroMax
+  FUNCTION                                                                 CALLS        %   TIME  [uS / CALLS]
+  --------                                                                 -----  -------   ----  [----------]
+  counters:get/2                                                               1     0.00      0  [      0.00]
+  counters:add/3                                                               1     0.00      0  [      0.00]
+  ...
+  rand:uniform/1                                                            5071     4.82   2253  [      0.44]
+  erlang:send/2                                                              979     5.08   2374  [      2.42]
+  'Elixir.Enum':split_list/3                                               21394     5.80   2710  [      0.13]
+  'Elixir.Enum':'-sum/1-lists^foldl/2-0-'/2                                47486    11.28   5272  [      0.11]
+  ----------------------------------------------------------------------  ------  -------  -----  [----------]
+  Total:                                                                  224888  100.00%  46749  [      0.21]
+99.56
+```
+
+You should see a long list of results indicating where your genetic algorithm spends most of its time. In this example you 'll notices that most of the work in the algorithm happens in list functions and random number generations.
 
 ## License
 
