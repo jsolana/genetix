@@ -4,7 +4,7 @@ defmodule Genetix.MixProject do
   def project do
     [
       app: :genetix,
-      version: "0.4.0",
+      version: "0.4.1",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -56,7 +56,7 @@ defmodule Genetix.MixProject do
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
       {:benchee, "~> 1.1", only: :dev},
       {:benchee_html, "~> 1.0", only: :dev},
-      {:exprof, "~> 0.2.4", only: :dev}
+      {:exprof, "~> 0.2.4"}
     ]
   end
 end
